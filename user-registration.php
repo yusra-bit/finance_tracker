@@ -61,25 +61,38 @@
         
                 <div class="mt-8 text-center">
                     <h4 class="mb-1 text-custom-500 dark:text-custom-500">Create your free account</h4>
-                    <p class="text-slate-500 dark:text-zink-200">Get your free Tailwick account now</p>
+                    <p class="text-slate-500 dark:text-zink-200">Track your finances with us!</p>
                 </div>
         
-                <form action="#!" class="mt-10" id="registerForm">
+                <form action="registration-code.php" method="POST" class="mt-10" id="registerForm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4">
+
                     <div class="mb-3">
-                        <label for="email-field" class="inline-block mb-2 text-base font-medium">Email</label>
-                        <input type="text" id="email-field" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Enter email">
-                        <div id="email-error" class="hidden mt-1 text-sm text-red-500">Please enter a valid email address.</div>
+                        <label for="company_name" class="inline-block mb-2 text-base font-medium">Company Name</label>
+                        <input type="text" id="company_name" name="company_name" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Enter company name">
+                       <!-- <div id="email-error" class="hidden mt-1 text-sm text-red-500">Please enter a valid comapny name.</div>-->
                     </div>
                     <div class="mb-3">
-                        <label for="username-field" class="inline-block mb-2 text-base font-medium">UserName</label>
-                        <input type="text" id="username-field" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Enter username">
-                        <div id="username-error" class="hidden mt-1 text-sm text-red-500">Please enter a username.</div>
+                        <label for="fullname" class="inline-block mb-2 text-base font-medium">Full Name</label>
+                        <input type="text" id="fullname" name="full_name" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Enter fullname">
+                    </div>
+                    <div class="mb-3">
+                        <label for="contact_no" class="inline-block mb-2 text-base font-medium">Contact No</label>
+                        <input type="number" id="contact_no" name ="contact_no" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Enter contact number">
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="inline-block mb-2 text-base font-medium">Address</label>
+                        <input type="text" id="address" name="address" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Enter address">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="inline-block mb-2 text-base font-medium">Email</label>
+                        <input type="email" id="email" name="email" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Enter email">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="inline-block mb-2 text-base font-medium">Password</label>
-                        <input type="password" id="password" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Enter password">
-                        <div id="password-error" class="hidden mt-1 text-sm text-red-500">Password must be at least 8 characters long and contain both letters and numbers.</div>
+                        <input type="password" id="password" name="password" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Enter password">
                     </div>
+</div>
                     <p class="italic text-15 text-slate-500 dark:text-zink-200">By registering you agree to the Tailwick <a href="#!" class="underline">Terms of Use</a></p>
                     <div class="mt-10">
                         <button type="submit" class="w-full text-white transition-all duration-200 ease-linear btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Sign In</button>
@@ -97,8 +110,9 @@
                     </div>
         
                     <div class="mt-10 text-center">
-                        <p class="mb-0 text-slate-500 dark:text-zink-200">Already have an account ? <a href="auth-login-basic.php" class="font-semibold underline transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500">Login</a> </p>
+                        <p class="mb-0 text-slate-500 dark:text-zink-200">Already have an account ? <a href="login-page.php" class="font-semibold underline transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500">Login</a> </p>
                     </div>
+
                 </form>
             </div>
         </div>
@@ -111,3 +125,5 @@
 </body>
 
 </html>
+
+

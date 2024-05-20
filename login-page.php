@@ -1,6 +1,43 @@
 <?php include 'partials/session.php'; ?>
 <?php include 'partials/main.php'; ?>
+<?php
+include('db/conn.php');
+session_start();
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve user input
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Check if the user exists
+    $sql = "SELECT * FROM users WHERE email = ? AND is_email_verified = 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 1) {
+        // User found, verify password
+        $user = $result->fetch_assoc();
+        //if (password_verify($password, $user['password'])) {
+        if ($user['password'] === $password) {
+            // Password is correct, login successful
+            // Set session variables
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['email'] = $user['email'];
+            // Redirect the user to the dashboard or another page
+            header("Location: index.php");
+            exit(); // Ensure that no other code is executed after the redirection
+        } else {
+            // Password is incorrect
+            echo "Incorrect password";
+        }
+    } else {
+        // User not found
+        echo "User not found";
+    }
+}
+?>
 <head>
 
     <?php includeFileWithVariables('partials/title-meta.php', array('title' => 'Sign In')); ?>
@@ -61,32 +98,33 @@
         
                 <div class="mt-8 text-center">
                     <h4 class="mb-1 text-custom-500 dark:text-custom-500">Welcome Back !</h4>
-                    <p class="text-slate-500 dark:text-zink-200">Sign in to continue to Tailwick.</p>
+                    <p class="text-slate-500 dark:text-zink-200">Sign in to continue to Finance Tracker.</p>
                 </div>
-        
-                <form action="index.php" class="mt-10" id="signInForm">
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+
+                    
                     <div class="hidden px-4 py-3 mb-3 text-sm text-green-500 border border-green-200 rounded-md bg-green-50 dark:bg-green-400/20 dark:border-green-500/50" id="successAlert">
                         You have <b>successfully</b> signed in.
                     </div>
                     <div class="mb-3">
-                        <label for="username" class="inline-block mb-2 text-base font-medium">UserName/ Email ID</label>
-                        <input type="text" id="username" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Enter username or email">
-                        <div id="username-error" class="hidden mt-1 text-sm text-red-500">Please enter a valid email address.</div>
+                        <label for="email" class="inline-block mb-2 text-base font-medium">Email ID</label>
+                        <input type="email" id="email" name="email" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Enter email">
+                       <!-- <div id="username-error" class="hidden mt-1 text-sm text-red-500">Please enter a valid email address.</div>-->
                     </div>
                     <div class="mb-3">
                         <label for="password" class="inline-block mb-2 text-base font-medium">Password</label>
-                        <input type="password" id="password" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Enter password">
-                        <div id="password-error" class="hidden mt-1 text-sm text-red-500">Password must be at least 8 characters long and contain both letters and numbers.</div>
+                        <input type="password" id="password" name="password" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Enter password">
+                       <!-- <div id="password-error" class="hidden mt-1 text-sm text-red-500">Password must be at least 8 characters long and contain both letters and numbers.</div>-->
                     </div>
-                    <div>
+                   <!-- <div>
                         <div class="flex items-center gap-2">
                             <input id="checkboxDefault1" class="size-4 border rounded-sm appearance-none bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400" type="checkbox" value="">
                             <label for="checkboxDefault1" class="inline-block text-base font-medium align-middle cursor-pointer">Remember me</label>
                         </div>
                         <div id="remember-error" class="hidden mt-1 text-sm text-red-500">Please check the "Remember me" before submitting the form.</div>
-                    </div>
+                    </div>-->
                     <div class="mt-10">
-                        <button type="submit" class="w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Sign In</button>
+                        <button type="submit" name="login" class="w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Sign In</button>
                     </div>
         
                     <div class="relative text-center my-9 before:absolute before:top-3 before:left-0 before:right-0 before:border-t before:border-t-slate-200 dark:before:border-t-zink-500">
@@ -101,7 +139,7 @@
                     </div>
         
                     <div class="mt-10 text-center">
-                        <p class="mb-0 text-slate-500 dark:text-zink-200">Don't have an account ? <a href="auth-register-basic.php" class="font-semibold underline transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500"> SignUp</a> </p>
+                        <p class="mb-0 text-slate-500 dark:text-zink-200">Don't have an account ? <a href="user-registration.php" class="font-semibold underline transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500"> SignUp</a> </p>
                     </div>
                 </form>
             </div>

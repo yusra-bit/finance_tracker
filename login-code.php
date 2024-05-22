@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Password is correct, login successful
             // Set session variables
             $_SESSION['user_id'] = $user['id'];
-            $_SESSION['email'] = $user['email'];$_SESSION['full_name'] = $user['user_full_name'];
+            $_SESSION['email'] = $user['email'];
             // Redirect the user to the dashboard or another page
             header("Location: index.php");
             exit(); // Ensure that no other code is executed after the redirection

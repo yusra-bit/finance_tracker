@@ -25,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Set session variables
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['email'] = $user['email'];
+            $_SESSION['company_id'] = $user['company_id'];
             // Redirect the user to the dashboard or another page
             header("Location: index.php");
             exit(); // Ensure that no other code is executed after the redirection

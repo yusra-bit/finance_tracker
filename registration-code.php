@@ -1,4 +1,7 @@
+
+
 <?php
+
 include('db/conn.php');
 
 // Process form submission
@@ -12,11 +15,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $created_date = date("Y-m-d H:i:s");
     $status = 'active';
 
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+
     $company_result = createCompany($created_date, $company_name, $contact_no, $address, $email, $status);
 
     if ($company_result['status'] == "success") {
         $company_id = $company_result['company_id'];
-        $user_result = registerUser($company_id, $created_date, $full_name, $email, $contact_no, 'admin', $password, 0, 'inactive');
+        $user_result = registerUser($company_id, $created_date, $full_name, $email, $contact_no, 'admin', $hashed_password, 0, 'inactive');
 
         if ($user_result['status'] == "success") {
             // Generate a verification code
@@ -71,11 +77,11 @@ function createCompany($created_date, $company_name, $phone, $address, $email, $
     }
 }
 
-function registerUser($company_id, $created_date, $user_full_name, $email, $phone, $role, $password, $is_email_verified, $status){
+function registerUser($company_id, $created_date, $user_full_name, $email, $phone, $role, $hashed_password, $is_email_verified, $status){
     $sql = "INSERT INTO `users`(`company_id`, `created_date`, `user_full_name`, `email`, `phone`, `role`, `password`, `is_email_verified`, `status`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $GLOBALS['conn']->prepare($sql);
 
-    $stmt->bind_param("issssssis", $company_id, $created_date, $user_full_name, $email, $phone, $role, $password, $is_email_verified, $status);
+    $stmt->bind_param("issssssis", $company_id, $created_date, $user_full_name, $email, $phone, $role, $hashed_password, $is_email_verified, $status);
 
     if ($stmt->execute()) {
         
@@ -101,5 +107,6 @@ function insertVerificationCode($user_id, $verification_code){
         return array("status" => "error");
     }
 }
+
 
 ?>
